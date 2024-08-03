@@ -182,8 +182,10 @@ int get_key(char *filename, char *section, char *key, char *result) {
                 strncpy(result, buff + key_len, MAX_CONFIG_LINE);
                 
                 //strip off the trailing newlines and return success
-                int result_len = strnlen(result,MAX_CONFIG_LINE);
-                result[result_len-2] = '\0';
+                int result_len = strnlen(result, MAX_CONFIG_LINE);
+                while (result_len > 0 && (result[result_len-1] == '\n' || result[result_len-1] == '\r'))
+                    result_len--;
+                result[result_len] = '\0';
                 fclose(config);
                 return 0;
             }
