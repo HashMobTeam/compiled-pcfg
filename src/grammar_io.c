@@ -250,16 +250,15 @@ int load_terminal(char *config_filename, char *base_directory, char *structure, 
         if (id > MAX_TERM_LENGTH) {
             continue;
         }
-        
+
         char filename[PATH_MAX];
         snprintf(filename, PATH_MAX, "%s%s%c%s", base_directory,section_folder,SLASH,result[i]);
-        
-        grammar_item[id] = load_term_from_file(filename, type, id);
-        
-        if (grammar_item[id] == NULL) {
-            return 1;
-        }
 
+        PcfgReplacements *item = load_term_from_file(filename, type, id);
+        if (item == NULL) {
+            continue;
+        }
+        grammar_item[id] = item;
     }
 
     return 0;
